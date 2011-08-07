@@ -11,7 +11,7 @@ public class IrcBot extends PircBot {
 	def couchDb
     
     public IrcBot() {
-        this.setName("HeikkiV");
+        this.setName("HeikkiV__");
 		couchDb = new CouchDb()
 		//messages = couchDb.getMessages()
 		messages.add(new Message(text:'Test', channel:'#yougamers2'))

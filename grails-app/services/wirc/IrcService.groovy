@@ -48,6 +48,6 @@ class IrcService implements InitializingBean {
 		    }
 		}
 		bot.sendMessage(channel, m)
-		bot.onMessage(channel, "HeikkiV", "", "", m)
+		bot.onMessage(channel, "HeikkiV__", "", "", m)
 	}
 }
