@@ -1,27 +1,32 @@
 package wirc
 
 import wirc.irc.IrcBot
-import org.springframework.beans.factory.InitializingBean
+import javax.annotation.PostConstruct
 
-class IrcService implements InitializingBean {
+class IrcService {
 
 	IrcBot bot
 	
 	public IrcService() {
 		bot = new IrcBot();
-		println "IrcService created"
 	}
 	
-	void afterPropertiesSet() {
+	@PostConstruct
+	void connectToIrcServer() {
 		bot.setVerbose(true);
 		bot.setEncoding("utf-8");
+		/*
 		try {
+			println 'Connecting to irc1.inet.fi ...'
 			bot.connect("irc1.inet.fi");
+			println 'Connected'
 		} catch(Exception e) {
 			println e.getMessage()
 		}
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
+		*/
+		println 'Connected to server and joined channels'
 	}
 	
 	
@@ -29,7 +34,7 @@ class IrcService implements InitializingBean {
 		println "Restarting IrcService"
 		bot.disconnect()
 		bot = new IrcBot()
-		afterPropertiesSet()
+		connectToIrcServer()
 	}
 
     def getMessages(String channel) {
@@ -40,7 +45,7 @@ class IrcService implements InitializingBean {
 		def words = message.split()
 		def m = ""
 		words.each {
-		    if(it.startsWith("http://")) {
+		    if(it.startsWith("http://") || it.startsWith("https://")) {
 				def shortLink = IsgdService.shortenUrl(it)
 		        m += "${shortLink} "
 		    } else {
