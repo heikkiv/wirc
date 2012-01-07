@@ -6,7 +6,6 @@
 		<script type="text/JavaScript">
 		
 			function updateMessages(channel) {
-				console.log(channel.substring(1));
 				$.get('ajaxMessages?channel=' + channel.substring(1), function(html, textStatus) {
 	               	$('#messages').replaceWith(html);
 					var i = 0;
@@ -19,6 +18,18 @@
 					});
 		        });
 			}
+			
+			function changeChannel(channel) {
+				console.log('Changing channel to: ' + channel);
+				updateMessages(channel);
+				if(channel === '#ep-dev') {
+					$('#yougamers-form').hide();
+					$('#ep-dev-form').show();
+				} else {
+					$('#yougamers-form').show();
+					$('#ep-dev-form').hide();
+				}
+			}
 		
 			$(document).ready(function() {
 				
@@ -26,21 +37,22 @@
 			        //updateMessages('#ep-dev');
 			    });
 			
+				$('#ep-dev-form a').click(function(e) {
+					$('#ep-dev-form form').submit();
+				});
+				
+				$('#yougamers-form a').click(function(e) {
+					$('#yougamers-form form').submit();
+				});
+			
 				$('.tabs').tabs();
 				$('.tabs').bind('change', function (e) {
 				    var channel = $(e.target).attr('href');
-					console.log('Changing channel to: ' + channel);
-					updateMessages(channel);
-					if(channel === '#ep-dev') {
-						$('#yougamers-form').hide();
-						$('#ep-dev-form').show();
-					} else {
-						$('#yougamers-form').show();
-						$('#ep-dev-form').hide();
-					}
+					changeChannel(channel);
 				});
 				
-				updateMessages('#ep-dev');
+				//console.log(${channel});
+				changeChannel('${channel}');
 			});
 			
 			//setInterval( "updateMessages()", 5000 );
@@ -51,24 +63,24 @@
     <body>
 		<div class="container">
 		<ul class="tabs" data-tabs="tabs">
-		  <li class="active"><a href="#ep-dev">#ep-dev</a></li>
-		  <li><a href="#yougamers2">#yougamers2</a></li>
+		  <li <% if(channel == '#ep-dev') { %>class="active"<% } %>><a href="#ep-dev">#ep-dev</a></li>
+		  <li <% if(channel == '#yougamers2') { %>class="active"<% } %>><a href="#yougamers2">#yougamers2</a></li>
 		</ul>
 		<div id="yougamers-form">
 			<g:form name="updateForm" action="sendMessage">
-				<g:textArea name="message" rows="3" cols="50"/>
+				<input class="span6" name="message" type="text">
 				<input type="hidden" name="channel" value="#yougamers2">
-				<input type="submit" value="Yougamers" />
+				<a href="#" class="btn small">yougamers2</a>
 			</g:form>
 		</div>
 		<div id="ep-dev-form">
 			<g:form name="updateForm" action="sendMessage">
-				<g:textArea name="message" rows="3" cols="50"/>
+				<input class="span6" name="message" type="text">
 				<input type="hidden" name="channel" value="#ep-dev">
-				<input type="submit" value="Ep-dev" />
+				<a href="#" class="btn small">ep-dev</a>
 			</g:form>
 		</div>
-		<a href="#" id="update">Update now</a>
+		<a href="#" id="update">Update now ${channel}</a>
 		<div id="messages"></div>
 		<!--
 		<div id="messages">

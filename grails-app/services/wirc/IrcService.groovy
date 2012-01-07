@@ -15,7 +15,6 @@ class IrcService {
 	void connectToIrcServer() {
 		bot.setVerbose(true);
 		bot.setEncoding("utf-8");
-		/*
 		try {
 			println 'Connecting to irc1.inet.fi ...'
 			bot.connect("irc1.inet.fi");
@@ -25,7 +24,6 @@ class IrcService {
 		}
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
-		*/
 		println 'Connected to server and joined channels'
 	}
 	

@@ -7,7 +7,7 @@ class LogController {
 	def ircService 
 
     def index = {
-		[messages:ircService.getMessages(''), channel:'yougamers']
+		[messages:ircService.getMessages(''), channel: (session.channel) ? session.channel : '#yougamers2']
 	}
 	
 	def ajaxMessages = {
@@ -16,6 +16,7 @@ class LogController {
 	
 	def sendMessage = {
 		ircService.sendMessage(params.channel, params.message)
+		session.channel = params.channel
 		redirect(action:index)
 	}
 	
