@@ -5,6 +5,9 @@
 		<script type="text/JavaScript" src="${resource(dir:'js',file:'bootstrap-tabs.js')}"></script>
 		<script type="text/JavaScript">
 		
+			window.heikkiv = {};
+			window.heikkiv.channel = '#ep-dev';
+		
 			function updateMessages(channel) {
 				$.get('ajaxMessages?channel=' + channel.substring(1), function(html, textStatus) {
 	               	$('#messages').replaceWith(html);
@@ -19,10 +22,11 @@
 		        });
 			}
 			
-			function changeChannel(channel) {
-				console.log('Changing channel to: ' + channel);
-				updateMessages(channel);
-				if(channel === '#ep-dev') {
+			function changeChannel(ch) {
+				console.log('Changing channel to: ' + ch);
+				window.heikkiv.channel = ch;
+				updateMessages(ch);
+				if(ch === '#ep-dev') {
 					$('#yougamers-form').hide();
 					$('#ep-dev-form').show();
 				} else {
@@ -55,7 +59,7 @@
 				changeChannel('${channel}');
 			});
 			
-			//setInterval( "updateMessages()", 5000 );
+			setInterval( "updateMessages(window.heikkiv.channel)", 5000 );
 		</script>
 		<link rel="StyleSheet" href="../css/wirc.css"/>
 		<link rel="stylesheet" href="${resource(dir:'css',file:'bootstrap.css')}" />
@@ -80,7 +84,6 @@
 				<a href="#" class="btn small">ep-dev</a>
 			</g:form>
 		</div>
-		<a href="#" id="update">Update now ${channel}</a>
 		<div id="messages"></div>
 		<!--
 		<div id="messages">
