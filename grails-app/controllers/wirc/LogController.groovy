@@ -1,17 +1,25 @@
 package wirc
 
-import grails.converters.XML
+import grails.converters.*
 
 class LogController {
 	
 	def ircService 
 
     def index = {
-		[messages:ircService.getMessages(''), channel: (session.channel) ? session.channel : '#yougamers2']
+		[messages:ircService.getMessages(''), channel: (session.channel) ? session.channel : '#ep-dev']
+	}
+	
+    def mobile = {
+		index()
 	}
 	
 	def ajaxMessages = {
 		[messages:ircService.getMessages(''), channel:params.channel]
+	}
+	
+	def jsonMessages = {
+		ajaxMessages()
 	}
 	
 	def sendMessage = {
