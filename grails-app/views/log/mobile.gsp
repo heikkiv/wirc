@@ -31,8 +31,10 @@
 		}
 		
 		$(document).ready(function() {
-				
+			
 			$('a').click(function() {
+				console.log('refresh');
+				window.location.reload(true);
 		        //updateMessages('#ep-dev');
 		    });
 			
@@ -54,8 +56,9 @@
 
 <div data-role="page">
 
-	<div data-role="header">
+	<div data-role="header" data-position="inline">
 		<h1>${channel}</h1>
+		<a href="mobile" data-role="button" data-icon="refresh" class="ui-btn-right">Refresh</a>
 	</div><!-- /header -->
 
 	<div data-role="content">	
