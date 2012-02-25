@@ -14,6 +14,10 @@ class LogController {
 		index()
 	}
 	
+	def multi = {
+		index()
+	}
+	
 	def ajaxMessages = {
 		[messages:ircService.getMessages(''), channel:params.channel]
 	}
@@ -25,7 +29,11 @@ class LogController {
 	def sendMessage = {
 		ircService.sendMessage(params.channel, params.message)
 		session.channel = params.channel
-		redirect(action:index)
+		if(params.mobile) {
+			redirect(url: 'http://spede.dyndns.org:8080/wirc/log/mobile')
+		} else {
+			redirect(action:index)
+		}
 	}
 	
 }
