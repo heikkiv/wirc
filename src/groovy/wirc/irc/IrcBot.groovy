@@ -31,11 +31,10 @@ public class IrcBot extends PircBot {
 	}
     
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
-		def text = markLinks(message)
 		def m = new Message()
 		m.id = System.currentTimeMillis()
 		m.sender = sender
-		m.text = text
+		m.text = message
 		m.channel = channel
 		messages.add(m)
 		if( messages.size() > 200 ) {
