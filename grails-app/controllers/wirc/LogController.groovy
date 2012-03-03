@@ -14,6 +14,11 @@ class LogController {
 		index()
 	}
 	
+    def message = {
+		def m = ircService.getMessages('')[params.index as int]
+		[message: m, text: markLinks(m.text), channel: (session.channel) ? session.channel : '#ep-dev']
+	}
+	
 	def multi = {
 		index()
 	}
@@ -34,6 +39,19 @@ class LogController {
 		} else {
 			redirect(action:index)
 		}
+	}
+	
+	def markLinks(String message) {
+		def words = message.split()
+		def m = ""
+		words.each {
+		    if(it.startsWith("http://") || it.startsWith("https://")) {
+		        m += "<a href='${it}'>${it}</a> "   
+		    } else {
+		        m += "${it.encodeAsHTML()} "
+		    }
+		}
+		return m
 	}
 	
 }

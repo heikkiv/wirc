@@ -17,7 +17,7 @@ class IrcService {
 		bot.setEncoding("utf-8");
 		try {
 			println 'Connecting to irc1.inet.fi ...'
-			bot.connect("irc1.inet.fi");
+			//bot.connect("irc1.inet.fi");
 			println 'Connected'
 		} catch(Exception e) {
 			println e.getMessage()
@@ -43,8 +43,8 @@ class IrcService {
 		def words = message.split()
 		def m = ""
 		words.each {
-		    if(it.startsWith("http://") || it.startsWith("https://")) {
-				def shortLink = IsgdService.shortenUrl(it)
+		    if((it.startsWith("http://") || it.startsWith("https://")) && it.endsWith("##shorten")) {
+				def shortLink = IsgdService.shortenUrl(it.replace("##shorten", ""))
 		        m += "${shortLink} "
 		    } else {
 		        m += "${it} "

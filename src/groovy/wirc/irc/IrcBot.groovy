@@ -16,6 +16,8 @@ public class IrcBot extends PircBot {
 		//messages = couchDb.getMessages()
 		messages.add(new Message(text:'Moikka', sender: 'Heikki', time: '14:59:24', channel:'#ep_dev'))
 		messages.add(new Message(text:'Terve', sender: 'Heikki', time: '14:59:30', channel:'#ep-dev'))
+		messages.add(new Message(text:'http://is.gd/l2deBJ foo', sender: 'Heikki', time: '14:59:40', channel:'#ep-dev'))
+		messages.add(new Message(text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum fringilla odio iaculis magna viverra cursus. Fusce nec aliquam orci. Praesent id varius eros. Donec mollis sagittis urna et porttitor. Ut at varius turpis. Mauris bibendum rhoncus nunc, molestie varius ipsum rhoncus id. In pellentesque eros ac sem imperdiet vel mollis eros convallis.', sender: 'Heikki', time: '14:59:45', channel:'#ep-dev'))
     }
 
 	def getMessagesFromChannel(String channel) {
@@ -42,19 +44,6 @@ public class IrcBot extends PircBot {
 		//couchDb.addMessage(m)
 		//println "On message called, messages ${messages.size()}"
     }
-
-	def markLinks(String message) {
-		def words = message.split()
-		def m = ""
-		words.each {
-		    if(it.startsWith("http://")) {
-		        m += "<a href='${it}'>${it}</a> "   
-		    } else {
-		        m += "${it.encodeAsHTML()} "
-		    }
-		}
-		return m
-	}
 	
 	public void onConnect() {
 		println "Connected"

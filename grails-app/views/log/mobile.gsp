@@ -33,9 +33,11 @@
 			<g:each var="m" status="s" in="${messages}">
 			 	<% if(m.channel == channel) { %>
 					<li>				
-						<h4>${m.sender}</h4>
-						<p>${m.text}</p>
-						<p class="ui-li-aside"><strong>${m.time.format("k:mm:ss")}</strong></p>
+						<a href="message?index=${s}">
+							<h4>${m.sender}</h4>
+							<p>${m.text}</p>
+							<p class="ui-li-aside"><strong>${m.time.format("k:mm:ss")}</strong></p>
+						</a>
 					</li>
 				<% } %>
 			</g:each>
