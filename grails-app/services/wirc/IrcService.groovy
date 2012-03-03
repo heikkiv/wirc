@@ -17,7 +17,7 @@ class IrcService {
 		bot.setEncoding("utf-8");
 		try {
 			println 'Connecting to irc1.inet.fi ...'
-			//bot.connect("irc1.inet.fi");
+			bot.connect("irc1.inet.fi");
 			println 'Connected'
 		} catch(Exception e) {
 			println e.getMessage()
