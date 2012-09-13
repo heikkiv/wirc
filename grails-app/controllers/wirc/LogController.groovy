@@ -35,7 +35,7 @@ class LogController {
 		ircService.sendMessage(params.channel, params.message)
 		session.channel = params.channel
 		if(params.mobile) {
-			redirect(url: 'http://spede.dyndns.org:8080/wirc/log/mobile')
+			redirect(url: 'http://pertti.dyndns.org/wirc/log/mobile')
 		} else {
 			redirect(action:index)
 		}
