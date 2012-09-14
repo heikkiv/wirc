@@ -34,8 +34,8 @@
 			 	<% if(m.channel == channel) { %>
 					<li>				
 						<a href="message?index=${s}">
-							<h4>${m.sender}</h4>
-							<p>${m.text}</p>
+							<h5>${m.sender}</h5>
+							<p>${m.text.encodeAsHTML()}</p>
 							<p class="ui-li-aside"><strong>${m.time.format("k:mm:ss")}</strong></p>
 						</a>
 					</li>
