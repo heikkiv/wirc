@@ -7,7 +7,10 @@ class LogController {
 	def ircService 
 
     def index = {
-		[messages:ircService.getMessages(''), channel: (session.channel) ? session.channel : '#ep-dev']
+        if(params.channel) {
+            session.channel = params.channel
+        }
+		return [messages: ircService.getMessages(''), channel: (session.channel) ? session.channel : '#ep-dev']
 	}
 	
     def mobile = {
