@@ -71,7 +71,7 @@
           
 			<g:each var="m" status="s" in="${messages}">
 			 	<% if(m.channel == channel) { %>
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span2">${m.time.format("k:mm:ss")} : ${m.sender}</div>
                         <div class="span10">${m.textWithLinks}</div>
                     </div>
