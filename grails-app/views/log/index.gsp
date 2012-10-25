@@ -31,6 +31,21 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script type="text/JavaScript">
+		$(document).ready(function() {
+				
+			$('#postButton').click(function() {
+		        $.post('sendMessage', {channel: '<%= channel %>', message: $('#messageText').val()}, function(resp) {
+		            window.location.reload(true);
+		        });
+		    });
+			
+		});
+		
+	</script>
+    
   </head>
 
   <body>
@@ -68,11 +83,18 @@
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span10">
+            
+            <div class="row-fluid input-append">
+                <form>
+                  <input id="messageText" type="text" class="input-xxlarge">
+                  <button id="postButton" class="btn" type="button">Post</button>
+                </form>
+            </div>
           
 			<g:each var="m" status="s" in="${messages}">
 			 	<% if(m.channel == channel) { %>
                     <div class="row-fluid">
-                        <div class="span2">${m.time.format("k:mm:ss")} : ${m.sender}</div>
+                        <div class="span2">${m.time.format("k:mm:ss")}:${m.sender}</div>
                         <div class="span10">${m.textWithLinks}</div>
                     </div>
 				<% } %>

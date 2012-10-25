@@ -40,7 +40,7 @@ class LogController {
 		if(params.mobile) {
 			redirect(url: 'http://pertti.dyndns.org/wirc/log/mobile')
 		} else {
-			redirect(action:index)
+			redirect(action: 'index')
 		}
 	}
 	
