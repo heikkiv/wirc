@@ -59,6 +59,10 @@ class IrcService {
 		    }
 		}
 		bot.sendMessage(channel, m)
-		bot.onMessage(channel, "HeikkiV__", "", "", m)
+        if(channel.startsWith('#')) {
+            bot.onMessage(channel, "HeikkiV__", "", "", m)
+        } else {
+            bot.onPrivateMessage("HeikkiV__", "HeikkiV__", 'localhost', m)
+        }
 	}
 }
