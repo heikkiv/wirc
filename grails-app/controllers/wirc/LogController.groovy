@@ -10,7 +10,14 @@ class LogController {
         if(params.channel) {
             session.channel = params.channel
         }
-		return [messages: ircService.getMessages(''), channel: (session.channel) ? session.channel : '#ep-dev']
+        def channel = (session.channel) ? session.channel : '#ep-dev'
+        def messages = []
+        if(params.from) {
+            messages = ircService.getPrivateMessages(params.from)
+        } else {
+            messages = ircService.getMessages(channel)
+        }
+		return [messages: messages, privateMessageSenders: ircService.getPrivateMessagesSenders(), channel: channel, from: params.from]
 	}
 	
     def mobile = {
@@ -35,6 +42,7 @@ class LogController {
 	}
 	
 	def sendMessage = {
+        println "Sending message to ${params.channel}: ${params.message}"
 		ircService.sendMessage(params.channel, params.message)
 		session.channel = params.channel
 		if(params.mobile) {
@@ -43,7 +51,7 @@ class LogController {
 			redirect(action: 'index')
 		}
 	}
-	
+    	
 	def markLinks(String message) {
 		def words = message.split()
 		def m = ""

@@ -37,7 +37,7 @@
 		$(document).ready(function() {
 				
 			$('#postButton').click(function() {
-		        $.post('sendMessage', {channel: '<%= channel %>', message: $('#messageText').val()}, function(resp) {
+		        $.post('sendMessage', {channel: '<%= (from) ? from : channel %>', message: $('#messageText').val()}, function(resp) {
 		            window.location.reload(true);
 		        });
 		    });
@@ -74,13 +74,24 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span2">
+            
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Channels</li>
-              <li class="<%= (channel == '#ep-dev') ? 'active' : '' %>"><a href="?channel=%23ep-dev">#ep-dev</a></li>
-              <li class="<%= (channel == '#yougamers2') ? 'active' : '' %>"><a href="?channel=%23yougamers2">#yougamers2</a></li>
+              <li class="<%= (!from && channel == '#ep-dev') ? 'active' : '' %>"><a href="?channel=%23ep-dev">#ep-dev</a></li>
+              <li class="<%= (!from && channel == '#yougamers2') ? 'active' : '' %>"><a href="?channel=%23yougamers2">#yougamers2</a></li>
             </ul>
           </div><!--/.well -->
+          
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Private messages</li>
+              <g:each var="sender" status="s" in="${privateMessageSenders}">
+                  <li class="<%= (from == sender) ? 'active' : '' %>"><a href="?from=${sender}">${sender}</a></li>
+              </g:each>
+            </ul>
+          </div><!--/.well -->
+        
         </div><!--/span-->
         <div class="span10">
             
@@ -92,12 +103,10 @@
             </div>
           
 			<g:each var="m" status="s" in="${messages}">
-			 	<% if(m.channel == channel) { %>
-                    <div class="row-fluid">
-                        <div class="span2">${m.time.format("k:mm:ss")}:${m.sender}</div>
-                        <div class="span10">${m.textWithLinks}</div>
-                    </div>
-				<% } %>
+		 	    <div class="row-fluid">
+                    <div class="span2">${m.time.format("k:mm:ss")}:${m.sender}</div>
+                    <div class="span10">${m.textWithLinks}</div>
+                </div>
 			</g:each>
           
         </div><!--/span-->

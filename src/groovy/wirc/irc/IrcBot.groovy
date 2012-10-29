@@ -2,12 +2,14 @@ package wirc.irc
 
 import org.jibble.pircbot.*
 import wirc.Message
+import wirc.PrivateMessage
 import wirc.couchdb.CouchDb
 import wirc.IsgdService
 
 public class IrcBot extends PircBot {
 	
 	def messages = []
+    def privateMessages = [:]
 	def couchDb
     
     public IrcBot() {
@@ -19,6 +21,17 @@ public class IrcBot extends PircBot {
 		messages.add(new Message(text:'http://is.gd/l2deBJ foo', sender: 'Heikki', time: '14:59:40', channel:'#ep-dev'))
 		messages.add(new Message(text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum fringilla odio iaculis magna viverra cursus. Fusce nec aliquam orci. Praesent id varius eros. Donec mollis sagittis urna et porttitor. Ut at varius turpis. Mauris bibendum rhoncus nunc, molestie varius ipsum rhoncus id. In pellentesque eros ac sem imperdiet vel mollis eros convallis.', sender: 'Heikki', time: '14:59:45', channel:'#ep-dev'))
 		messages.add(new Message(text:'<Yammer|Test user>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum fringilla odio iaculis magna viverra cursus. Fusce nec aliquam orci. Praesent id varius eros. Donec mollis sagittis urna et porttitor. Ut at varius turpis. Mauris bibendum rhoncus nunc, molestie varius ipsum rhoncus id. In pellentesque eros ac sem imperdiet vel mollis eros convallis.', sender: 'Heikki', time: '14:59:45', channel:'#ep-dev'))
+        def temp = []
+        temp.add(new PrivateMessage(text: 'moikka moi', sender: 'FonHeikki', login: 'FonHeikki', hostname: 'localhost'))
+        privateMessages.put('FonHeikki', temp)
+    }
+
+    def getPrivateMessagesSenders() {
+        return privateMessages.keySet()
+    }
+    
+    def getPrivateMessages(String sender) {
+        return privateMessages[sender]
     }
 
 	def getMessagesFromChannel(String channel) {
@@ -33,7 +46,6 @@ public class IrcBot extends PircBot {
     
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		def m = new Message()
-		m.id = System.currentTimeMillis()
 		m.sender = sender
 		m.text = message
 		m.channel = channel
@@ -43,6 +55,24 @@ public class IrcBot extends PircBot {
 		}
 		//couchDb.addMessage(m)
 		//println "On message called, messages ${messages.size()}"
+    }
+    
+    public void onPrivateMessage(String sender, String login, String hostname, String message) {
+        def m = new PrivateMessage()
+        m.sender = sender
+        m.login = login
+        m.hostname = hostname
+        m.text = message
+        addPrivateMessage(message)
+    }
+    
+    private void addPrivateMessage(def message) {
+        if(privateMessages[message.sender]) {
+            privateMessages[message.sender].add(message)
+        } else {
+            privateMessages[message.sender] = []
+            privateMessages[message.sender].add(message)
+        }
     }
 	
 	public void onConnect() {
@@ -64,16 +94,6 @@ public class IrcBot extends PircBot {
 		}
 	}
 	
-	/*
-	public void onServerPing(String response) {
-		super.onServerPing(response);
-		def channels = getChannels() as List
-		if( !channels.contains("#yougamers2") ) {
-			println "Rejoining #yougamers2"
-			joinChannel("#yougamers2");
-		}
-	}
-	*/
 }
 
 

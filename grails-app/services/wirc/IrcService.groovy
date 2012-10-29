@@ -35,6 +35,14 @@ class IrcService {
 		connectToIrcServer()
 	}
 
+    def getPrivateMessagesSenders() {
+        return bot.getPrivateMessagesSenders()
+    }
+    
+    def getPrivateMessages(String sender) {
+        return bot.getPrivateMessages(sender)
+    }
+    
     def getMessages(String channel) {
 		return bot.getMessagesFromChannel(channel).reverse()
     }
