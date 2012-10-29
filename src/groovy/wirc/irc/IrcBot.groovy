@@ -63,10 +63,10 @@ public class IrcBot extends PircBot {
         m.login = login
         m.hostname = hostname
         m.text = message
-        addPrivateMessage(message)
+        addPrivateMessage(m)
     }
     
-    private void addPrivateMessage(def message) {
+    private void addPrivateMessage(PrivateMessage message) {
         if(privateMessages[message.sender]) {
             privateMessages[message.sender].add(message)
         } else {
