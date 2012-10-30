@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct
 class IrcService {
 
 	IrcBot bot
+    RedisService redisService
 	
 	public IrcService() {
 		bot = new IrcBot();
@@ -17,13 +18,15 @@ class IrcService {
 		bot.setEncoding("utf-8");
 		try {
 			println 'Connecting to irc1.inet.fi ...'
-			bot.connect("irc1.inet.fi");
+			//bot.connect("irc1.inet.fi");
 			println 'Connected'
 		} catch(Exception e) {
 			println e.getMessage()
 		}
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
+        bot.loadMessages('#ep-dev')
+        bot.loadMessages('#yougamers2')
 		println 'Connected to server and joined channels'
 	}
 	
@@ -62,7 +65,7 @@ class IrcService {
         if(channel.startsWith('#')) {
             bot.onMessage(channel, "HeikkiV__", "", "", m)
         } else {
-            bot.onPrivateMessage("HeikkiV__", "HeikkiV__", 'localhost', m)
+            bot.onPrivateMessage(channel, channel, 'localhost', m)
         }
 	}
 }

@@ -4,18 +4,17 @@ import org.jibble.pircbot.*
 import wirc.Message
 import wirc.PrivateMessage
 import wirc.couchdb.CouchDb
-import wirc.IsgdService
+import wirc.RedisService
 
 public class IrcBot extends PircBot {
 	
 	def messages = []
     def privateMessages = [:]
-	def couchDb
+	RedisService redisService
     
     public IrcBot() {
         this.setName("HeikkiV__");
-		couchDb = new CouchDb()
-		//messages = couchDb.getMessages()
+		redisService = new RedisService()
 		messages.add(new Message(text:'Moikka', sender: 'Heikki', time: '14:59:24', channel:'#ep_dev'))
 		messages.add(new Message(text:'Terve', sender: 'Heikki', time: '14:59:30', channel:'#ep-dev'))
 		messages.add(new Message(text:'http://is.gd/l2deBJ foo', sender: 'Heikki', time: '14:59:40', channel:'#ep-dev'))
@@ -24,6 +23,15 @@ public class IrcBot extends PircBot {
         def temp = []
         temp.add(new PrivateMessage(text: 'moikka moi', sender: 'FonHeikki', login: 'FonHeikki', hostname: 'localhost'))
         privateMessages.put('FonHeikki', temp)
+    }
+
+    def loadMessages(String channel) {
+        int n = 0
+        redisService.lrange('channel:' + channel, 0, 99).each {
+            messages.add(new Message(it))
+            n++
+        }
+        println "Loaded $n messages from $channel"
     }
 
     def getPrivateMessagesSenders() {
@@ -53,8 +61,7 @@ public class IrcBot extends PircBot {
 		if( messages.size() > 200 ) {
 			messages = messages.tail()
 		}
-		//couchDb.addMessage(m)
-		//println "On message called, messages ${messages.size()}"
+		redisService.lpush('channel:'+channel, m.toTsv())
     }
     
     public void onPrivateMessage(String sender, String login, String hostname, String message) {
