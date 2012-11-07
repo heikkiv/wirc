@@ -41,6 +41,19 @@
 		            window.location.reload(true);
 		        });
 		    });
+            
+            function checkNewMessages() {
+		        $.get('messageCount', function(resp) {
+		            if(messageCount > 0 && messageCount < resp.count) {
+		                console.log('New messages');
+                        $('#newMessagesNotice').show();
+		            }
+                    messageCount = resp.count;
+		        });
+            }
+            
+            var messageCount = -1;
+            setInterval(checkNewMessages, 5000);
 			
 		});
 		
@@ -94,6 +107,13 @@
         
         </div><!--/span-->
         <div class="span10">
+            
+            <div id='newMessagesNotice' class="row-fluid" style="display: none">
+                <div class="alert">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  New messages
+                </div>
+            </div>
             
             <div class="row-fluid input-append">
                 <form>

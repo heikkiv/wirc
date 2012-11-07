@@ -64,5 +64,11 @@ class LogController {
 		}
 		return m
 	}
+    
+    def messageCount = {
+        def channel = (session.channel) ? session.channel : '#ep-dev'
+        def n = ircService.getMessageCount(channel)
+        render(contentType: 'text/json') {[count: n]}
+    }
 	
 }

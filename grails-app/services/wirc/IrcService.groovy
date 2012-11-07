@@ -52,6 +52,10 @@ class IrcService {
         println "Loaded $messages.size messages from $channel"
 		return messages
     }
+    
+    def getMessageCount(String channel) {
+        return redisService.llen('channel:' + channel)
+    }
 
 	def sendMessage(String channel, String message) {
 		def m = shortenUrls(message)
