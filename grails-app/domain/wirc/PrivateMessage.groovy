@@ -6,4 +6,9 @@ class PrivateMessage extends WircMessage {
     String login = ''
     String hostname = ''
     String text = ''
+    
+    public String toTsv() {
+        def temp = text.replace('\t', ' ')
+        return "$time.time\t$sender\t$sender\t$temp".toString()
+    }
 }

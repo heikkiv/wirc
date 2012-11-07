@@ -33,5 +33,13 @@ class RedisService {
     public List<String> lrange(String key, int start, int stop) {
         return jedis.lrange(key, start, stop)
     }
+    
+    public int sadd(String key, String value) {
+        return jedis.sadd(key, value).intValue()
+    }
+    
+    public Set<String> smembers(String key) {
+        return jedis.smembers(key)
+    }
 
 }

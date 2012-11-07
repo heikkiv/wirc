@@ -13,7 +13,7 @@ class LogController {
         def channel = (session.channel) ? session.channel : '#ep-dev'
         def messages = []
         if(params.from) {
-            messages = ircService.getPrivateMessages(params.from)
+            messages = ircService.getMessages(params.from)
         } else {
             messages = ircService.getMessages(channel)
         }

@@ -25,11 +25,8 @@ class IrcService {
 		}
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
-        bot.loadMessages('#ep-dev')
-        bot.loadMessages('#yougamers2')
-		println 'Connected to server and joined channels'
+        println 'Connected to server and joined channels'
 	}
-	
 	
 	def restart() {
 		println "Restarting IrcService"
@@ -39,33 +36,49 @@ class IrcService {
 	}
 
     def getPrivateMessagesSenders() {
-        return bot.getPrivateMessagesSenders()
-    }
-    
-    def getPrivateMessages(String sender) {
-        return bot.getPrivateMessages(sender)
+        def senders = []
+        redisService.smembers('private:message:senders').each {
+            senders.add(it)
+        }
+        println "Loaded $senders.size private message sender"
+		return senders
     }
     
     def getMessages(String channel) {
-		return bot.getMessagesFromChannel(channel).reverse()
+        def messages = []
+        redisService.lrange('channel:' + channel, 0, 99).each {
+            messages.add(new Message(it))
+        }
+        println "Loaded $messages.size messages from $channel"
+		return messages
     }
 
 	def sendMessage(String channel, String message) {
+		def m = shortenUrls(message)
+		bot.sendMessage(channel, m)
+        if(channel.startsWith('#')) {
+            bot.onMessage(channel, "HeikkiV__", "", "", m)
+        } else {
+            def pm = new PrivateMessage()
+            pm.sender = 'HeikkiV__'
+            pm.text = message
+            redisService.sadd('private:message:senders', channel)
+            redisService.lpush('channel:'+channel, pm.toTsv())
+        }
+	}
+    
+    def shortenUrls(String message) {
 		def words = message.split()
 		def m = ""
 		words.each {
 		    if((it.startsWith("http://") || it.startsWith("https://")) && it.endsWith("##shorten")) {
+                println "Shortening url $it"
 				def shortLink = IsgdService.shortenUrl(it.replace("##shorten", ""))
 		        m += "${shortLink} "
 		    } else {
 		        m += "${it} "
 		    }
 		}
-		bot.sendMessage(channel, m)
-        if(channel.startsWith('#')) {
-            bot.onMessage(channel, "HeikkiV__", "", "", m)
-        } else {
-            bot.onPrivateMessage(channel, channel, 'localhost', m)
-        }
-	}
+        return m
+    }
 }
