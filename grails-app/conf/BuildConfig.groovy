@@ -25,8 +25,8 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
-        runtime 'redis.clients:jedis:2.0.0'
+        compile "org.grails.plugins:rest-client-builder:1.0.2"
+        compile "redis.clients:jedis:2.0.0"
     }
 
 }
