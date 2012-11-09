@@ -3,16 +3,19 @@ package wirc.irc
 import org.jibble.pircbot.*
 import wirc.Message
 import wirc.PrivateMessage
-import wirc.couchdb.CouchDb
 import wirc.RedisService
+import wirc.NotificationService
+import wirc.BoxCarNotificationService
 
 public class IrcBot extends PircBot {
 	
 	RedisService redisService
+    NotificationService notificationService
     
     public IrcBot() {
         this.setName("HeikkiV__");
 		redisService = new RedisService()
+        notificationService = new BoxCarNotificationService()
     }
 
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -21,6 +24,9 @@ public class IrcBot extends PircBot {
 		m.text = message
 		m.channel = channel
 		redisService.lpush('channel:'+channel, m.toTsv())
+        if(message.contains('HeikkiV__')) {
+            notificationService.sendNotification(message, 'heikki.verta@gmail.com', 'http://pertti.dyndns.info/wirc/log/index')
+        }
     }
     
     public void onPrivateMessage(String sender, String login, String hostname, String message) {
@@ -31,6 +37,7 @@ public class IrcBot extends PircBot {
         m.text = message
         redisService.sadd('private:message:senders', sender)
         redisService.lpush('channel:'+sender, m.toTsv())
+        notificationService.sendNotification(message, 'heikki.verta@gmail.com', 'http://pertti.dyndns.info/wirc/log/index?from=' + sender)
     }
 	
 	public void onConnect() {
