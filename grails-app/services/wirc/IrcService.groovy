@@ -40,7 +40,7 @@ class IrcService {
         redisService.smembers('private:message:senders').each {
             senders.add(it)
         }
-        println "Loaded $senders.size private message sender"
+        println "Loaded $senders.size private message senders"
 		return senders
     }
     
