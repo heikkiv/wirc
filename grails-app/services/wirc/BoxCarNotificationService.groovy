@@ -7,6 +7,7 @@ class BoxCarNotificationService implements NotificationService {
     private String notificationUrl = 'http://boxcar.io/devices/providers/w0HwjplsXU2ujtJCi4U1/notifications' 
     
     public boolean sendNotification(String message, String email, String url) {
+        println "Sending notification $message:$url to $email"
         def rest = new RestBuilder()
         def resp = rest.post(notificationUrl) {
             setProperty 'email', email
