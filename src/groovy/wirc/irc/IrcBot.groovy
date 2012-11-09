@@ -37,7 +37,7 @@ public class IrcBot extends PircBot {
         m.text = message
         redisService.sadd('private:message:senders', sender)
         redisService.lpush('channel:'+sender, m.toTsv())
-        notificationService.sendNotification(message, 'heikki.verta@gmail.com', 'http://pertti.dyndns.info/wirc/log/index?from=' + sender)
+        notificationService.sendNotification(sender + ': ' + message, 'heikki.verta@gmail.com', 'http://pertti.dyndns.info/wirc/log/index?from=' + sender)
     }
 	
 	public void onConnect() {
