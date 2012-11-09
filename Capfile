@@ -6,7 +6,7 @@ default_environment['GROOVY_HOME']="/usr/local/groovy"
 default_environment['GRAILS_HOME']="/home/heikki/grails"
 default_environment['PATH'] = "$JAVA_HOME/bin:$GROOVY_HOME/bin:$GRAILS_HOME/bin:$PATH"
 
-grails_cmd = "/home/heikki/grails/bin/grails"
+grails_cmd = "/home/heikki/grails/bin/grails -plain-output"
 
 desc "Deploy latest version from git"
 task :deploy do
