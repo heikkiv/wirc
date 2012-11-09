@@ -26,7 +26,7 @@ class IrcBotTests extends GrailsUnitTestCase {
     
     void testPrivateMessageNotification() {
         bot.onPrivateMessage('HeikkiV__', '', '', 'How Ya Doin')
-        assertEquals lastNotification, 'How Ya Doin'
+        assertEquals lastNotification, 'HeikkiV__: How Ya Doin'
     }
     
 }
