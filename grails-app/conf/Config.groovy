@@ -66,6 +66,12 @@ log4j = {
     //appenders {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
+    appenders {
+        rollingFile name: "wircAppender",
+                    maxFileSize: 1048576,
+                    maxBackupIndex: 5,
+                    file: "/media/Backup/wirc.log"
+    }
 
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
