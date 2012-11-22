@@ -26,6 +26,10 @@ class RedisService {
         return jedis.llen(key).intValue()
     }
     
+    public void ltrim(String key, int start, int stop) {
+        jedis.ltrim(key, start, stop)
+    }
+    
     public int lpush(String key, String value) {
         return jedis.lpush(key, value).intValue()
     }
