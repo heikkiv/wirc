@@ -73,7 +73,7 @@ log4j = {
                     file: "/media/Backup/logs/wirc.log"
     }
 
-    info   'wirc.irc.IrcBot'
+    info   wircAppender: "wirc"
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP
