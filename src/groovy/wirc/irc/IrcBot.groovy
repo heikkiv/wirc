@@ -1,6 +1,8 @@
 package wirc.irc
 
 import org.jibble.pircbot.*
+import org.apache.commons.logging.LogFactory
+
 import wirc.Message
 import wirc.PrivateMessage
 import wirc.RedisService
@@ -8,6 +10,8 @@ import wirc.NotificationService
 import wirc.BoxCarNotificationService
 
 public class IrcBot extends PircBot {
+    
+    private static final log = LogFactory.getLog(this)
 	
 	RedisService redisService
     NotificationService notificationService
