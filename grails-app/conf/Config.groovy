@@ -70,9 +70,10 @@ log4j = {
         rollingFile name: "wircAppender",
                     maxFileSize: 1048576,
                     maxBackupIndex: 5,
-                    file: "/media/Backup/wirc.log"
+                    file: "/media/Backup/logs/wirc.log"
     }
 
+    info   'wirc.irc.IrcBot'
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP
