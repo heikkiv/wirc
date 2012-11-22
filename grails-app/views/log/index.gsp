@@ -36,10 +36,20 @@
 	<script type="text/JavaScript">
 		$(document).ready(function() {
 				
-			$('#postButton').click(function() {
+            function sendMessage() {
 		        $.post('sendMessage', {channel: '<%= (from) ? from : channel %>', message: $('#messageText').val()}, function(resp) {
 		            window.location.reload(true);
 		        });
+            }
+            
+			$('#postForm').submit(function(event) {
+                event.preventDefault();
+                sendMessage();
+		    });
+            
+			$('#postButton').click(function(event) {
+                event.preventDefault();
+                sendMessage();
 		    });
             
             function checkNewMessages() {
@@ -116,7 +126,7 @@
             </div>
             
             <div class="row-fluid input-append">
-                <form>
+                <form id="postForm">
                   <input id="messageText" type="text" class="input-xxlarge">
                   <button id="postButton" class="btn" type="button">Post</button>
                 </form>
