@@ -67,13 +67,21 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
     appenders {
-        rollingFile name: "wircAppender",
-                    maxFileSize: 1048576,
-                    maxBackupIndex: 5,
-                    file: "/media/Backup/logs/wirc.log"
+        environments {
+            production {
+                rollingFile name: "wircAppender",
+                            maxFileSize: 1048576,
+                            maxBackupIndex: 5,
+                            file: "/media/Backup/logs/wirc.log"
+            }
+        }
     }
 
-    info   wircAppender: "wirc"
+    environments {
+        production {
+            info   wircAppender: "wirc"
+        }
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP
