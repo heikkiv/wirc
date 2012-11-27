@@ -17,7 +17,7 @@ class IrcService {
 	void connectToIrcServer() {
         println "Running in ${Environment.current} environment"
 		bot.setVerbose(true);
-		bot.setEncoding("iso-8859-1");
+		bot.setEncoding("utf-8");
         if(Environment.current == Environment.PRODUCTION) {
     		try {
     			println 'Connecting to irc1.inet.fi ...'
