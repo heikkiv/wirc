@@ -12,7 +12,7 @@ desc "Deploy latest version from git"
 task :deploy do
   run "cd wirc && #{grails_cmd} clean"
   run "cd wirc && git pull"
-  run "cd wirc && #{grails_cmd} war target/wirc.war"
+  run "cd wirc && #{grails_cmd} prod war target/wirc.war"
   pid = capture("ps -eo pid,command | grep 'tomcat/bin' | grep -v grep | awk '{print $1}'")
   if(pid != '')
     sudo "kill -9 " + pid
