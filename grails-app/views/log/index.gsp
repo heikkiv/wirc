@@ -134,7 +134,7 @@
           
 			<g:each var="m" status="s" in="${messages}">
 		 	    <div class="row-fluid">
-                    <div class="span12"><small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.textWithLinks}</div>
+                    <div class="span12"><small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.htmlTextWithLinks}</div>
                 </div>
 			</g:each>
           

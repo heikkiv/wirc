@@ -4,7 +4,7 @@ abstract class WircMessage {
 
     long id = System.currentTimeMillis()
 
-	public String getTextWithLinks() {
+	public String getHtmlTextWithLinks() {
 		def words = this.text.split()
 		def m = ""
 		words.each {
