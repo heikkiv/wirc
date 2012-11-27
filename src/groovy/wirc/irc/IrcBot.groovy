@@ -48,11 +48,11 @@ public class IrcBot extends PircBot {
     }
 	
 	public void onConnect() {
-		println "Connected"
+		println "onConnect called"
 	}
 	
 	public void onDisconnect() {
-		println "Disconnected from irc server"
+		println "onDisconnect called"
 		while (!isConnected()) {
 		    try {
 				println "Trying to reconnect"
