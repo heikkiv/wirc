@@ -15,6 +15,7 @@ class IrcService {
 	
 	@PostConstruct
 	void connectToIrcServer() {
+        println "Running in ${Environment.current} environment"
 		bot.setVerbose(true);
 		bot.setEncoding("iso-8859-1");
         if(Environment.current == Environment.PRODUCTION) {
