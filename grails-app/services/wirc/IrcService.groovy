@@ -2,6 +2,7 @@ package wirc
 
 import wirc.irc.IrcBot
 import javax.annotation.PostConstruct
+import grails.util.Environment
 
 class IrcService {
 
@@ -16,13 +17,17 @@ class IrcService {
 	void connectToIrcServer() {
 		bot.setVerbose(true);
 		bot.setEncoding("iso-8859-1");
-		try {
-			println 'Connecting to irc1.inet.fi ...'
-			bot.connect("irc1.inet.fi");
-			println 'Connected'
-		} catch(Exception e) {
-			println e.getMessage()
-		}
+        if(Environment.current == Environment.PRODUCTION) {
+    		try {
+    			println 'Connecting to irc1.inet.fi ...'
+    			bot.connect("irc1.inet.fi");
+    			println 'Connected'
+    		} catch(Exception e) {
+    			println e.getMessage()
+    		}
+        } else {
+            println "In ${Environment.current} environment skipping bot.connect(...)"
+        }
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
         println 'Connected to server and joined channels'
