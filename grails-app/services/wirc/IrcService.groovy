@@ -22,7 +22,7 @@ class IrcService {
     		try {
     			println 'Connecting to irc1.inet.fi ...'
     			bot.connect("irc1.inet.fi");
-    			println 'Connected'
+    			println 'Connected to server'
     		} catch(Exception e) {
     			println e.getMessage()
     		}
@@ -31,7 +31,7 @@ class IrcService {
         }
 		bot.joinChannel("#yougamers2");
 		bot.joinChannel("#ep-dev");
-        println 'Connected to server and joined channels'
+        println 'Joined channels'
 	}
 	
 	def restart() {
