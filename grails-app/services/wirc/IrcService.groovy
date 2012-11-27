@@ -15,7 +15,7 @@ class IrcService {
 	@PostConstruct
 	void connectToIrcServer() {
 		bot.setVerbose(true);
-		bot.setEncoding("utf-8");
+		bot.setEncoding("iso-8859-1");
 		try {
 			println 'Connecting to irc1.inet.fi ...'
 			bot.connect("irc1.inet.fi");
