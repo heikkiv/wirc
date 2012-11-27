@@ -17,7 +17,8 @@ class LogController {
         } else {
             messages = ircService.getMessages(channel)
         }
-		return [messages: messages, privateMessageSenders: ircService.getPrivateMessagesSenders(), channel: channel, from: params.from]
+        def users = ircService.getUsers(channel)
+		return [messages: messages, privateMessageSenders: ircService.getPrivateMessagesSenders(), users: users, channel: channel, from: params.from]
 	}
 	
     def mobile = {

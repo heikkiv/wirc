@@ -114,6 +114,15 @@
               </g:each>
             </ul>
           </div><!--/.well -->
+          
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Users</li>
+              <g:each var="user" status="s" in="${users}">
+                  <li><a href="?from=${user.nick}">${user.nick}</a></li>
+              </g:each>
+            </ul>
+          </div><!--/.well -->
         
         </div><!--/span-->
         <div class="span10">

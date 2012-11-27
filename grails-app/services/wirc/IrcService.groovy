@@ -62,6 +62,10 @@ class IrcService {
     def getMessageCount(String channel) {
         return redisService.llen('channel:' + channel)
     }
+    
+    def getUsers(String channel) {
+        return bot.getUsers(channel)
+    }
 
 	def sendMessage(String channel, String message) {
 		def m = shortenUrls(message)
