@@ -60,7 +60,9 @@ class IrcService {
     }
     
     def getMessageCount(String channel) {
-        return redisService.llen('channel:' + channel)
+        String countString = redisService.get('channel:' + channel + ':messagecount') 
+        int n = (countString) ? countString as int : 0;
+        return n 
     }
     
     def getUsers(String channel) {

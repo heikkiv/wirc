@@ -37,4 +37,11 @@ class RedisServiceTests extends GrailsUnitTestCase {
         assertEquals list[1], 'world'
     }
     
+    void testIncr() {
+        redisService.del('count')
+        redisService.incr('count')
+        redisService.incr('count')
+        assertEquals redisService.get('count'), '2'
+    }
+    
 }

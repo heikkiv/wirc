@@ -45,5 +45,9 @@ class RedisService {
     public Set<String> smembers(String key) {
         return jedis.smembers(key)
     }
+    
+    public void incr(String key) {
+        jedis.incr(key);
+    }
 
 }
