@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <!-- Le styles -->
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
@@ -64,6 +64,21 @@
             
             var messageCount = -1;
             setInterval(checkNewMessages, 5000);
+            
+            $('#channels').collapse()
+            $('#channels').click(function(event) {
+              $('#channels').collapse('toggle')  
+            });
+            
+            $('#privateMessages').collapse()
+            $('#privateMessages').click(function(event) {
+              $('#privateMessages').collapse('toggle')  
+            });
+            
+            $('#users').collapse()
+            $('#users').click(function(event) {
+              $('#users').collapse('toggle')  
+            });
 			
 		});
 		
@@ -81,13 +96,41 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">wirc</a>
+          <a class="brand" href="/wirc/log/index">wirc</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Channels
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="<%= (!from && channel == '#ep-dev') ? 'active' : '' %>"><a href="?channel=%23ep-dev">#ep-dev</a></li>
+                  <li class="<%= (!from && channel == '#yougamers2') ? 'active' : '' %>"><a href="?channel=%23yougamers2">#yougamers2</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Private messages
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <g:each var="sender" status="s" in="${privateMessageSenders}">
+                      <li class="<%= (from == sender) ? 'active' : '' %>"><a href="?from=${sender}">${sender}</a></li>
+                  </g:each>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Users
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <g:each var="user" status="s" in="${users}">
+                      <li><a href="?from=${user.nick}">${user.nick}</a></li>
+                  </g:each>
+                </ul>
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -96,9 +139,9 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span2">
+        <div class="span2 hidden-phone">
             
-          <div class="well sidebar-nav">
+          <div id="channels" class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Channels</li>
               <li class="<%= (!from && channel == '#ep-dev') ? 'active' : '' %>"><a href="?channel=%23ep-dev">#ep-dev</a></li>
@@ -106,7 +149,7 @@
             </ul>
           </div><!--/.well -->
           
-          <div class="well sidebar-nav">
+          <div id="privateMessages" class="well sidebar-nav hidden-phone">
             <ul class="nav nav-list">
               <li class="nav-header">Private messages</li>
               <g:each var="sender" status="s" in="${privateMessageSenders}">
@@ -115,7 +158,7 @@
             </ul>
           </div><!--/.well -->
           
-          <div class="well sidebar-nav">
+          <div id="users" class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Users</li>
               <g:each var="user" status="s" in="${users}">
