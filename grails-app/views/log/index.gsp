@@ -79,7 +79,7 @@
             $('#users').click(function(event) {
               $('#users').collapse('toggle')  
             });
-			
+            
 		});
 		
 	</script>
@@ -186,8 +186,12 @@
           
 			<g:each var="m" status="s" in="${messages}">
 		 	    <div class="row-fluid">
-                    <div class="span12"><small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.htmlTextWithLinks}</div>
-                </div>
+              <div class="span12">
+                <small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.htmlTextWithLinks}
+                <span class="pull-right"><button class="btn btn-link" type="button">Work</button></span>                
+                <span class="pull-right"><button class="btn btn-link" type="button">Banter</button></span>
+              </div>
+          </div>
 			</g:each>
           
         </div><!--/span-->
