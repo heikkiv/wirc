@@ -9,17 +9,22 @@ import wirc.RedisService
 import wirc.NotificationService
 import wirc.BoxCarNotificationService
 
+import com.heikkiv.ml.thomas.Classifier
+import com.heikkiv.ml.thomas.NaiveBayesClassifier
+
 public class IrcBot extends PircBot {
     
     private static final log = LogFactory.getLog(this)
 	
 	RedisService redisService
     NotificationService notificationService
+    Classifier classifier
     
     public IrcBot() {
         this.setName("HeikkiV__");
 		redisService = new RedisService()
         notificationService = new BoxCarNotificationService()
+        classifier = new NaiveBayesClassifier()
     }
 
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -27,6 +32,7 @@ public class IrcBot extends PircBot {
 		m.sender = sender
 		m.text = message
 		m.channel = channel
+		m.category = classifier.classify(message)
 		redisService.lpush('channel:' + channel, m.toTsv())
 		redisService.ltrim('channel:' + channel, 0, 1000)
 		redisService.incr('channel:' + channel + ':messagecount')
