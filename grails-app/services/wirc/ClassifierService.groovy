@@ -3,14 +3,21 @@ package wirc
 import com.heikkiv.ml.thomas.*
 import com.heikkiv.ml.thomas.mongo.*
 
+import javax.annotation.PostConstruct
+
 class ClassifierService {
 
+    def grailsApplication
     Classifier classifier
 
     ClassifierService() {
         classifier = new NaiveBayesClassifier()
         classifier.repository = new MongoBayesClassifierRepository()
-        classifier.setThreshold('work', 1.5)
+    }
+
+    @PostConstruct
+    void setThreshold() {
+        classifier.setThreshold('work', grailsApplication.config.thomas.threshold as double)
     }
 
     void train(String document, String category) {
