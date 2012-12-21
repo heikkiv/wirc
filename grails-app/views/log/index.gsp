@@ -64,22 +64,21 @@
             
             var messageCount = -1;
             setInterval(checkNewMessages, 5000);
-            
-            $('#channels').collapse()
-            $('#channels').click(function(event) {
-              $('#channels').collapse('toggle')  
+
+            $('#messages a').click(function(event) {
+                event.preventDefault();
+                var link = $(this).attr('href');
+                $.get(link, function(response) {
+                    $(event.target).hide();
+                });
             });
-            
-            $('#privateMessages').collapse()
-            $('#privateMessages').click(function(event) {
-              $('#privateMessages').collapse('toggle')  
-            });
-            
-            $('#users').collapse()
-            $('#users').click(function(event) {
-              $('#users').collapse('toggle')  
-            });
-            
+
+            $('#messages .row-fluid').hover(function() {
+                 $(this).find('span:first').show()
+             }, function() {
+                 $(this).find('span:first').hide();
+             });
+
 		});
 		
 	</script>
@@ -183,15 +182,23 @@
                   <button id="postButton" class="btn" type="button">Post</button>
                 </form>
             </div>
-          
-			<g:each var="m" status="s" in="${messages}">
-		 	    <div class="row-fluid">
-              <div class="span12">
-                <small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.htmlTextWithLinks}
-                <span class="pull-right muted">${m.category}</span>
-              </div>
-          </div>
-			</g:each>
+
+            <div id="messages">
+                <g:each var="m" status="s" in="${messages}">
+                    <div class="row-fluid">
+                        <div class="span11">
+                            <small>${m.time.format("k:mm")}</small> <strong>${m.sender}</strong> ${m.htmlTextWithLinks}
+                            <span class="pull-right hidden-phone" style="display: none">
+                                <a href="/wirc/train?message=${URLEncoder.encode(m.text, 'UTF-8')}&category=work">Work</a>
+                                <a href="/wirc/train?message=${URLEncoder.encode(m.text, 'UTF-8')}&category=banter">Banter</a>
+                            </span>
+                        </div>
+                        <div class="span1">
+                            <span class="muted">${m.category}</span>
+                        </div>
+                    </div>
+                </g:each>
+			</div>
           
         </div><!--/span-->
       </div><!--/row-->
