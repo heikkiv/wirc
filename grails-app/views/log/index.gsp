@@ -65,7 +65,7 @@
             var messageCount = -1;
             setInterval(checkNewMessages, 5000);
 
-            $('#messages a').click(function(event) {
+            $('#messages span a').click(function(event) {
                 event.preventDefault();
                 var link = $(this).attr('href');
                 $.get(link, function(response) {
