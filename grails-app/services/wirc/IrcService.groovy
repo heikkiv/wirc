@@ -1,8 +1,6 @@
 package wirc
 
 import wirc.irc.IrcBot
-import com.heikkiv.ml.thomas.*
-import com.heikkiv.ml.thomas.mongo.*
 
 import javax.annotation.PostConstruct
 import grails.util.Environment
@@ -11,18 +9,16 @@ class IrcService {
 
 	IrcBot bot
     RedisService redisService
-	
+    ClassifierService classifierService
+
 	public IrcService() {
 		bot = new IrcBot();
-		def classifier = new NaiveBayesClassifier()
-		classifier.repository = new MongoBayesClassifierRepository()
-		classifier.setThreshold('work', 2)
-		bot.classifier = classifier
 	}
 	
 	@PostConstruct
 	void connectToIrcServer() {
         println "Running in ${Environment.current} environment"
+        bot.classifier = classifierService
 		bot.setVerbose(true);
 		bot.setEncoding("utf-8");
         if(Environment.current == Environment.PRODUCTION) {
