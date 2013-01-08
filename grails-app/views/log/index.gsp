@@ -57,13 +57,15 @@
 		            if(messageCount > 0 && messageCount < resp.count) {
 		                console.log('New messages');
                         $('#newMessagesNotice').show();
+		            } else {
+  		                setTimeout(checkNewMessages, 5000);
 		            }
                     messageCount = resp.count;
 		        });
             }
             
             var messageCount = -1;
-            setInterval(checkNewMessages, 5000);
+            setTimeout(checkNewMessages, 5000);
             
             $('#channels').collapse()
             $('#channels').click(function(event) {
@@ -173,7 +175,7 @@
             <div id='newMessagesNotice' class="row-fluid" style="display: none">
                 <div class="alert">
                   <button type="button" class="close" data-dismiss="alert">×</button>
-                  New messages
+                  <a href="/wirc/log/index">New messages</a>
                 </div>
             </div>
             
