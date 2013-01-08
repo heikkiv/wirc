@@ -98,5 +98,4 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-
-     
+thomas.threshold = 1

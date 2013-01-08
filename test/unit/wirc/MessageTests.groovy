@@ -12,8 +12,8 @@ class MessageTests extends GrailsUnitTestCase {
     }
 
     void testToTabSeparatedValues() {
-        Message m = new Message(text:'Moikka\tmoi', sender: 'Heikki', time: new Date(0), channel:'#ep-dev')
-        assertEquals m.toTsv(), '0\t#ep-dev\tHeikki\tMoikka moi'
+        Message m = new Message(text:'Moikka\tmoi', sender: 'Heikki', time: new Date(0), channel:'#ep-dev', category: 'work')
+        assertEquals '0\t#ep-dev\tHeikki\tMoikka moi\twork', m.toTsv()
     }
     
     void testTsvConstructor() {
@@ -22,6 +22,16 @@ class MessageTests extends GrailsUnitTestCase {
         assertEquals m.channel, '#ep-dev'
         assertEquals m.sender, 'Heikki'
         assertEquals m.text, 'Moikka moi'
+        assertEquals m.category, 'unknown'
+    }
+    
+    void testTsvConstructorWithCategory() {
+        Message m = new Message('1\t#ep-dev\tHeikki\tMoikka moi\twork')
+        assertEquals m.time.getTime(), 1
+        assertEquals m.channel, '#ep-dev'
+        assertEquals m.sender, 'Heikki'
+        assertEquals m.text, 'Moikka moi'
+        assertEquals m.category, 'work'
     }
     
 }

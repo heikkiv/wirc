@@ -1,6 +1,7 @@
 package wirc
 
 import wirc.irc.IrcBot
+
 import javax.annotation.PostConstruct
 import grails.util.Environment
 
@@ -8,7 +9,8 @@ class IrcService {
 
 	IrcBot bot
     RedisService redisService
-	
+    ClassifierService classifierService
+
 	public IrcService() {
 		bot = new IrcBot();
 	}
@@ -16,6 +18,7 @@ class IrcService {
 	@PostConstruct
 	void connectToIrcServer() {
         println "Running in ${Environment.current} environment"
+        bot.classifier = classifierService
 		bot.setVerbose(true);
 		bot.setEncoding("utf-8");
         if(Environment.current == Environment.PRODUCTION) {
