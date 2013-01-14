@@ -7,18 +7,34 @@ class LogController {
 	def ircService 
 
     def index = {
+    	def channel = '#ep-dev'
         if(params.channel) {
-            session.channel = params.channel
+            channel = params.channel
         }
-        def channel = (session.channel) ? session.channel : '#ep-dev'
-        def messages = []
         if(params.from) {
-            messages = ircService.getMessages(params.from)
-        } else {
-            messages = ircService.getMessages(channel)
+            channel = params.from
         }
+        session.channel = channel
+        def messages = ircService.getMessages(channel)
+        def privateMessageSenders = ircService.getPrivateMessagesSenders()
         def users = ircService.getUsers(channel)
-		return [messages: messages, privateMessageSenders: ircService.getPrivateMessagesSenders(), users: users, channel: channel, from: params.from]
+        def unreadMessages = [:]
+        privateMessageSenders.each { sender ->
+        	unreadMessages[sender] = ircService.getUnreadMessageCount(sender)
+        }
+        def yougamersUnreadMessages = ircService.getUnreadMessageCount('#yougamers2')
+        def epdevUnreadMessages = ircService.getUnreadMessageCount('#ep-dev')
+        ircService.resetUnreadMessageCount(channel)
+		return [
+			messages: messages, 
+			privateMessageSenders: privateMessageSenders, 
+			unreadMessages: unreadMessages,,
+			yougamersUnreadMessages: yougamersUnreadMessages,
+			epdevUnreadMessages: epdevUnreadMessages, 
+			users: users, 
+			channel: channel, 
+			from: params.from
+		]
 	}
 	
     def mobile = {

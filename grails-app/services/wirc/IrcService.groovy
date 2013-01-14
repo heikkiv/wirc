@@ -64,8 +64,16 @@ class IrcService {
     
     def getMessageCount(String channel) {
         String countString = redisService.get('channel:' + channel + ':messagecount') 
-        int n = (countString) ? countString as int : 0;
-        return n 
+        return (countString) ? countString as int : 0;
+    }
+
+    def getUnreadMessageCount(String channel) {
+        String countString = redisService.get('channel:' + channel + ':unreadmessagecount') 
+        return (countString) ? countString as int : 0; 
+    }
+
+    def resetUnreadMessageCount(String channel) {
+        redisService.set('channel:' + channel + ':unreadmessagecount', '0') 
     }
     
     def getUsers(String channel) {

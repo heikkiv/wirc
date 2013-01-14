@@ -118,7 +118,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   <g:each var="sender" status="s" in="${privateMessageSenders}">
-                      <li class="<%= (from == sender) ? 'active' : '' %>"><a href="?from=${sender}">${sender}</a></li>
+                      <li class="<%= (from == sender) ? 'active' : '' %>">
+                        <a href="?from=${sender}">${sender} ${unreadMessages[sender]}</a>
+                      </li>
                   </g:each>
                 </ul>
               </li>
@@ -146,8 +148,12 @@
           <div id="channels" class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Channels</li>
-              <li class="<%= (!from && channel == '#ep-dev') ? 'active' : '' %>"><a href="?channel=%23ep-dev">#ep-dev</a></li>
-              <li class="<%= (!from && channel == '#yougamers2') ? 'active' : '' %>"><a href="?channel=%23yougamers2">#yougamers2</a></li>
+              <li class="<%= (!from && channel == '#ep-dev') ? 'active' : '' %>">
+                <a href="?channel=%23ep-dev">#ep-dev <span class="pull-right"><%=(epdevUnreadMessages > 0) ? epdevUnreadMessages : '&nbsp' %></span></a>
+              </li>
+              <li class="<%= (!from && channel == '#yougamers2') ? 'active' : '' %>">
+                <a href="?channel=%23yougamers2">#yougamers2 <span class="pull-right"><%=(yougamersUnreadMessages > 0) ? yougamersUnreadMessages : '&nbsp' %></span></a>
+              </li>
             </ul>
           </div><!--/.well -->
           
@@ -155,7 +161,9 @@
             <ul class="nav nav-list">
               <li class="nav-header">Private messages</li>
               <g:each var="sender" status="s" in="${privateMessageSenders}">
-                  <li class="<%= (from == sender) ? 'active' : '' %>"><a href="?from=${sender}">${sender}</a></li>
+                  <li class="<%= (from == sender) ? 'active' : '' %>">
+                    <a href="?from=${sender}">${sender} <span class="pull-right"><%=(unreadMessages[sender] > 0) ? unreadMessages[sender] : '&nbsp' %></span></a>
+                  </li>
               </g:each>
             </ul>
           </div><!--/.well -->
