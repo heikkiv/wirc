@@ -38,7 +38,7 @@ public class IrcBot extends PircBot {
 		redisService.ltrim('channel:' + channel, 0, 1000)
 		redisService.incr('channel:' + channel + ':messagecount')
         log.info(m.toTsv())
-        if(message.contains('HeikkiV__')) {
+        if(message.toLowerCase().contains('heikkiv__')) {
             notificationService.sendNotification(message, 'heikki.verta@gmail.com', 'http://pertti.dyndns.info/wirc/log/index')
         }
     }
