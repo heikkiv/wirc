@@ -208,6 +208,9 @@
                             <span class="muted">${m.category}</span>
                         </div>
                     </div>
+                    <g:if test="${(s+1) == currentChannelUnreadMessages}">
+                         <hr/>
+                    </g:if>
                 </g:each>
 			</div>
           

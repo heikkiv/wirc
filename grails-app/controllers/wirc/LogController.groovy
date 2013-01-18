@@ -22,13 +22,15 @@ class LogController {
         privateMessageSenders.each { sender ->
         	unreadMessages[sender] = ircService.getUnreadMessageCount(sender)
         }
+        def currentChannelUnreadMessages = ircService.getUnreadMessageCount(channel)
         def yougamersUnreadMessages = ircService.getUnreadMessageCount('#yougamers2')
         def epdevUnreadMessages = ircService.getUnreadMessageCount('#ep-dev')
         ircService.resetUnreadMessageCount(channel)
 		return [
 			messages: messages, 
 			privateMessageSenders: privateMessageSenders, 
-			unreadMessages: unreadMessages,,
+			unreadMessages: unreadMessages,
+			currentChannelUnreadMessages: currentChannelUnreadMessages,
 			yougamersUnreadMessages: yougamersUnreadMessages,
 			epdevUnreadMessages: epdevUnreadMessages, 
 			users: users, 
