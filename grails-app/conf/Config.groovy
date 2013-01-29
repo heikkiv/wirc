@@ -47,7 +47,7 @@ grails.spring.bean.packages = []
 // set per-environment serverURL stem for creating absolute links
 environments {
     production {
-        grails.serverURL = "http://pertti.dyndns.info/${appName}"
+        grails.serverURL = "http://spede.dyndns.org:8080/${appName}"
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
