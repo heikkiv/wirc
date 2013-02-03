@@ -12,7 +12,6 @@ class ClassifierService {
 
     ClassifierService() {
         classifier = new NaiveBayesClassifier()
-        classifier.repository = new MongoBayesClassifierRepository()
     }
 
     @PostConstruct
